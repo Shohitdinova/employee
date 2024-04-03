@@ -1,7 +1,7 @@
 package com.example.employees.user;
 
-import com.example.user_crud_html.user.dto.UserResponseDto;
-import com.example.user_crud_html.user.entity.User;
+import com.example.employees.user.dto.UserResponseDto;
+import com.example.employees.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;

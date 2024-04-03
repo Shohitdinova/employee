@@ -1,6 +1,6 @@
 package com.example.employees.user;
-import com.example.user_crud_html.user.dto.UserResponseDto;
-import com.example.user_crud_html.user.entity.User;
+import com.example.employees.user.dto.UserResponseDto;
+import com.example.employees.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

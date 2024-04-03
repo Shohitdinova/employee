@@ -1,18 +1,24 @@
 server:
-  port: 8080
-#  servlet:
-#    context-path: /api/v1
+  port: 8089
+  servlet:
+    context-path: /api/v1
+
+telegram:
+  bot:
+    token: 6977521869:AAHoom3w_K-3M_Y4Ladz0DftcMwfQG6UQYg
+    username: t.me/my_search_books_bot
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:1234/postgres
-    password: 1234
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
+    password: 123
 
   jpa:
-    show-sql: true
     properties:
       hibernate:
+        format_sql: true
         show_sql: true
+
     hibernate:
       ddl-auto: update

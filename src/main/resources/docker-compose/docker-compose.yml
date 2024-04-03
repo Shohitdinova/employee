@@ -1,7 +1,0 @@
-services:
-  code-db:
-    image: postgres:16.1
-    ports:
-      - "1234:5432"
-    environment:
-      - "POSTGRES_PASSWORD=1234"
