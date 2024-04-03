@@ -1,11 +1,12 @@
 package com.example.employees.user;
-
-import com.example.employees.common.repository.GenericSpecificationRepository;
-import com.example.employees.user.entity.User1;
+import com.example.user_crud_html.user.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
-public interface UserRepository extends GenericSpecificationRepository<User1, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
+
+
+
 
 }

@@ -1,48 +1,53 @@
 package com.example.employees.user;
-
-import com.example.employees.common.service.GenericCrudService;
-import com.example.employees.user.dto.UserCreateDto;
-import com.example.employees.user.dto.UserPatchDto;
-import com.example.employees.user.dto.UserResponseDto;
-import com.example.employees.user.dto.UserUpdateDto;
-import com.example.employees.user.entity.User1;
-import lombok.Getter;
+import com.example.user_crud_html.user.dto.UserResponseDto;
+import com.example.user_crud_html.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-@Getter
 @RequiredArgsConstructor
-public class UserService extends GenericCrudService<User1, Long, UserCreateDto, UserUpdateDto, UserPatchDto, UserResponseDto> {
-
-    private final UserRepository repository;
-    private final UserDtoMapper mapper;
-    private final Class<User1> entityClass = User1.class;
-    private final ModelMapper modelMapper;
+public class UserService {
+    private final UserRepository userRepository;
+    private final ModelMapper mapper;
 
 
-    @Override
-    protected User1 save(UserCreateDto userCreateDto) {
-        User1 entity = mapper.toEntity(userCreateDto);
-        return repository.save(entity);
-    }
+    public List<UserResponseDto> getAll() {
 
-    @Override
-    protected User1 updateEntity(UserUpdateDto userUpdateDto, User1 user) {
-        mapper.update(userUpdateDto, user);
-        return repository.save(user);
+        List<User> all = userRepository.findAll();
+        return all.stream()
+                .map(book -> mapper.map(book, UserResponseDto.class))
+                .collect(Collectors.toList());
+
+
     }
 
 
-    public List<User1> getAllUsers() {
-        return repository.findAll();
+
+
+
+    public Optional<User> getById(Long id) {
+        return userRepository.findById(id);
     }
 
+    public User add(User book) {
+        return userRepository.save(book);
+    }
+
+
+    public void update(Long id, User updatedBook) {
+        if (userRepository.existsById(id)) {
+            updatedBook.setId(id);
+            userRepository.save(updatedBook);
+        }
+    }
+
+
+    public void delete(Long id) {
+        userRepository.deleteById(id);
+    }
 }
-
-
-

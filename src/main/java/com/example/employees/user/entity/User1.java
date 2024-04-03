@@ -1,29 +1,30 @@
 package com.example.employees.user.entity;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity
+@Builder
+@Entity(name = "`user`")
 public class User1 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @NotBlank
-    @Column(name = "name", unique = true, nullable = false)
-    private String name;
-
-    private String email;
-
-    @NotBlank
-    private String address;
-
-    @NotBlank
+    private Long chatId;
+    private String firstname;
+    private String lastname;
+    private String username;
     private String phoneNumber;
 
 
+    public User1(Long chatId, String firstname, String lastname, String username) {
+        this.chatId = chatId;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.username = username;
+    }
 }

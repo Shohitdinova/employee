@@ -1,66 +1,46 @@
 package com.example.employees.user;
-import com.example.employees.user.entity.User1;
-import org.apache.catalina.User;
-import org.springframework.ui.Model;
 
-import com.example.employees.user.dto.UserCreateDto;
-import com.example.employees.user.dto.UserResponseDto;
-import com.example.employees.user.dto.UserUpdateDto;
-import jakarta.validation.Valid;
+import com.example.user_crud_html.user.dto.UserResponseDto;
+import com.example.user_crud_html.user.entity.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
+
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/book")
 @RequiredArgsConstructor
 public class UserController {
+    private final UserService userService;
 
-    private final UserService service;
+
+    @GetMapping
+    public List<UserResponseDto> getAll() {
+        return userService.getAll();
+    }
+
+
 
     @PostMapping
-    public ResponseEntity<UserResponseDto> create(@RequestBody @Valid UserCreateDto createDto) {
-        UserResponseDto categoryResponseDto = service.create(createDto);
-        return ResponseEntity.ok(categoryResponseDto);
+    public ResponseEntity<User> add(@RequestBody User book) {
+        User bookResponseDto = userService.add(book);
+        return  ResponseEntity.status( HttpStatus.CREATED).body(bookResponseDto);
     }
-    @GetMapping
-    public ResponseEntity<Page<UserResponseDto>> getAll(Pageable pageable, @RequestParam(required = false) String predicate) {
-        Page<UserResponseDto> all = service.getAll(pageable, predicate);
-        return ResponseEntity.ok(all);
-    }
-
-
-    @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDto> get(@PathVariable Long id) {
-        UserResponseDto responseDto = service.getById(id);
-        return ResponseEntity.ok(responseDto);
-    }
-
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDto> update(@PathVariable Long id, @RequestBody @Valid UserUpdateDto updateDto) {
-        UserResponseDto responseDto = service.update(id, updateDto);
-        return ResponseEntity.ok(responseDto);
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody User updatedBook) {
+        userService.update(id, updatedBook);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        userService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
-
-
-
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<?> delete(@PathVariable Long id) {
-//        service.delete(id);
-//        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-//    }
-//
-@GetMapping("/users")
-public String getAllUsers(Model model) {
-    List<User1> users = service.getAllUsers();
-    model.addAttribute("users", users);
-    return "users";
-}
 
 }
